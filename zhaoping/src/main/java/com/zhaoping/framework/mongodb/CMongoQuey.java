@@ -1,8 +1,4 @@
-/**
- * 
- */
 package com.zhaoping.framework.mongodb;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
