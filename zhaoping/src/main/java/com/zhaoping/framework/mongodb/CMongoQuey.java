@@ -39,7 +39,7 @@ public class CMongoQuey<E extends Serializable> {
 
 	public static MongoSession getMongoSession() {
 		MongoSession mongoSession = (MongoSession) threadSession.get();
-	
+
 		try {
 			if (mongoSession == null) {
 				mongoSession = new MongoSession();
@@ -167,11 +167,13 @@ public class CMongoQuey<E extends Serializable> {
 			DBObject dbObject = dbCursor.next();
 			arrayList.add(dbObject);
 		}
-		sortBasicDBObject =new BasicDBObject();
-		
-		query=null;
+		sortBasicDBObject = new BasicDBObject();
+
+		query = new BasicDBObject();
 		mongoSession.setSortBasicDBObject(sortBasicDBObject);
-		
+		mongoSession.setQuery(query);
+		mongoSession.setPage(0);
+		mongoSession.setPageCount(0);
 		db.requestDone();
 		return arrayList;
 	}
@@ -216,6 +218,8 @@ public class CMongoQuey<E extends Serializable> {
 				true); // false//如果数据库不存在，是否添加
 		// false//false只修改第一个，true如果有多条就不修改
 		rt = result.getN();
+		query = new BasicDBObject();
+		mongoSession.setQuery(query);
 		db.requestDone();
 		return rt;
 	}
@@ -263,6 +267,8 @@ public class CMongoQuey<E extends Serializable> {
 					false, false); // false//如果数据库不存在，是否添加
 			// false//false只修改第一个，true如果有多条就不修改
 			rt = result.getN();
+			query = new BasicDBObject();
+			mongoSession.setQuery(query);
 			db.requestDone();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -293,6 +299,8 @@ public class CMongoQuey<E extends Serializable> {
 		DBObject updateSetValue = new BasicDBObject(condition.getValue(),
 				updatedValue);
 		WriteResult result = collection.update(query, updateSetValue);
+		query = new BasicDBObject();
+		mongoSession.setQuery(query);
 		rt = result.getN();
 		db.requestDone();
 		return rt;
@@ -310,6 +318,8 @@ public class CMongoQuey<E extends Serializable> {
 		db.requestStart();
 		BasicDBObject query = mongoSession.getQuery();
 		WriteResult result = collection.remove(query);
+		query = new BasicDBObject();
+		mongoSession.setQuery(query);
 		rt = result.getN();
 		db.requestDone();
 		return rt;
@@ -330,7 +340,7 @@ public class CMongoQuey<E extends Serializable> {
 		MongoSession mongoSession = getMongoSession();
 		db.requestStart();
 		BasicDBObject query = mongoSession.getQuery();
-		query= new BasicDBObject();
+		//query = new BasicDBObject();
 		BasicDBObject backbBasicDBObject = mongoSession.getBackbBasicDBObject();
 		if (isJavaClass(obj.getClass()))
 			backbBasicDBObject = new BasicDBObject(condition.getValue(), obj);
@@ -375,7 +385,7 @@ public class CMongoQuey<E extends Serializable> {
 		MongoSession mongoSession = getMongoSession();
 		db.requestStart();
 		BasicDBObject query = mongoSession.getQuery();
-		query= new BasicDBObject();
+		//query = new BasicDBObject();
 		if (isJavaClass(obj.getClass()))
 			query.put(key, obj);
 		else {
