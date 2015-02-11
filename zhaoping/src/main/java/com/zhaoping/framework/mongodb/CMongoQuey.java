@@ -1,4 +1,5 @@
 package com.zhaoping.framework.mongodb;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +135,27 @@ public class CMongoQuey<E extends Serializable> {
 		}
 		db.requestDone();
 		return 1;
+	}
+
+	public long Count() {
+		MongoSession mongoSession = getMongoSession();
+		DBCollection collection = mongoSession.getCollection();
+		BasicDBObject sortBasicDBObject = mongoSession.getSortBasicDBObject();
+		BasicDBObject query = mongoSession.getQuery();
+		int page = mongoSession.getPage();
+		int pageCount = mongoSession.getPageCount();
+
+		db.requestStart();
+		long count = collection.getCount(query);
+		sortBasicDBObject = new BasicDBObject();
+
+		query = new BasicDBObject();
+		mongoSession.setSortBasicDBObject(sortBasicDBObject);
+		mongoSession.setQuery(query);
+		mongoSession.setPage(0);
+		mongoSession.setPageCount(0);
+		db.requestDone();
+		return count;
 	}
 
 	/**
@@ -336,7 +358,7 @@ public class CMongoQuey<E extends Serializable> {
 		MongoSession mongoSession = getMongoSession();
 		db.requestStart();
 		BasicDBObject query = mongoSession.getQuery();
-		//query = new BasicDBObject();
+		// query = new BasicDBObject();
 		BasicDBObject backbBasicDBObject = mongoSession.getBackbBasicDBObject();
 		if (isJavaClass(obj.getClass()))
 			backbBasicDBObject = new BasicDBObject(condition.getValue(), obj);
@@ -381,7 +403,7 @@ public class CMongoQuey<E extends Serializable> {
 		MongoSession mongoSession = getMongoSession();
 		db.requestStart();
 		BasicDBObject query = mongoSession.getQuery();
-		//query = new BasicDBObject();
+		// query = new BasicDBObject();
 		if (isJavaClass(obj.getClass()))
 			query.put(key, obj);
 		else {

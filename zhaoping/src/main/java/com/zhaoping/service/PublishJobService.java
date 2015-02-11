@@ -3,6 +3,7 @@
  */
 package com.zhaoping.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,13 +18,13 @@ import com.zhaoping.model.MapPoint;
 import com.zhaoping.model.Province;
 import com.zhaoping.model.Result;
 import com.zhaoping.model.company.JobChance;
+import com.zhaoping.model.company.JobLabel;
 
 /**
  * @author hongxiao.shou
  *
  */
 @Repository
-
 public class PublishJobService implements IPublishJobService {
 	private final String jobstablename = "jobs";
 
@@ -79,10 +80,14 @@ public class PublishJobService implements IPublishJobService {
 	public JobChance getdatePubLishById(int jobid) {
 		List<JobChance> list1 = null;
 		JobChance jobChance = new JobChance();
-		jobChance.setCity(new City());
-		jobChance.setProvince(new Province());
-		jobChance.setJobType(1);
+		// jobChance.setCity(new City());
+		// jobChance.setProvince(new Province());
+		// jobChance.setJobType(1);
 		// jobChance.setLowSalary(1);
+		List<Integer> labels = new ArrayList<Integer>();
+		labels.add(1);
+		labels.add(2);
+		jobChance.setLabels(labels);
 		jobChance.setMapPoint(new MapPoint());
 		// JobLabel jobLabel = new JobLabel();
 		// jobLabel.setId(1);
@@ -123,6 +128,43 @@ public class PublishJobService implements IPublishJobService {
 		List<JobChance> list = mongoQuey.where("mapPoint", Condition.NEAR, li)
 				.select(JobChance.class);
 		return list;
+	}
+
+	@Override
+	public List<JobChance> getJobByCity(int province, int city) {
+		mongoQuey = mongoQuey.SelectCollection(jobstablename);
+
+		List<JobChance> list = mongoQuey.where("province", province)
+				.where("city", city).select(JobChance.class);
+		return list;
+	}
+
+	@Override
+	public List<JobChance> getJobByCityByPage(int province, int city, int page,
+			int size) {
+		mongoQuey = mongoQuey.SelectCollection(jobstablename);
+
+		List<JobChance> list = mongoQuey.where("province", province)
+				.where("city", city).page(page, size).select(JobChance.class);
+		return list;
+	}
+	
+	@Override
+	public List<JobChance> getJobByCityAndTypeByPage(int province, int city,int jobType, int page,
+			int size) {
+		mongoQuey = mongoQuey.SelectCollection(jobstablename);
+
+		List<JobChance> list = mongoQuey.where("province", province)
+				.where("city", city).where("jobType", jobType).page(page, size).select(JobChance.class);
+		return list;
+	}
+
+	@Override
+	public long getJobByCityCout(int province, int city) {
+		mongoQuey = mongoQuey.SelectCollection(jobstablename);
+		long count = mongoQuey.where("province", province).where("city", city)
+				.Count();
+		return count;
 	}
 
 	/**

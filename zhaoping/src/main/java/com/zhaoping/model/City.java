@@ -17,7 +17,7 @@ public class City implements Serializable {
 
 	public String cityName="";
 
-	public int provinceId=-1;
+	public int provinceId=2;
 
 	//public MapPoint mapPoint;
 

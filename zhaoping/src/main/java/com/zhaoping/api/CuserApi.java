@@ -53,14 +53,14 @@ public class CuserApi {
 			@PathVariable("pwd") String pwd) {
 		RUser cRegister = null;
 		cRegister = cuserService.login(phone, pwd);
-	
+
 		String s = cRegister.getName();
 		Result result = new Result();
 		MapPoint mapPoint = new MapPoint();
 		// IpAddress.getRemortIP(getIP());
 
 		LocationAddress address = Location.getLocation(getIP(request));
-	
+
 		String x = "";
 		String y = "";
 		if (address != null && address.getContent() != null) {
@@ -109,6 +109,34 @@ public class CuserApi {
 		MapPoint mapPoint = resume.getMapPoint();
 
 		return publishJobService.getDeliverListByxy(mapPoint);
+	}
+
+	@RequestMapping(value = "/getjobbycityandtypebypage/{province}/{city}/{jobtype}/{page}/{size}", method = RequestMethod.GET)
+	public @ResponseBody List<JobChance> getJobByCityAndTypeByPage(
+			HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("province") int province,
+			@PathVariable("city") int city,
+			@PathVariable("jobtype") int jobtype,
+			@PathVariable("page") int page, @PathVariable("size") int size) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET");
+		return publishJobService.getJobByCityAndTypeByPage(province, city,
+				jobtype, page, size);
+	}
+	
+	@RequestMapping(value = "/getjobbycitycount/{province}/{city}", method = RequestMethod.GET)
+	public @ResponseBody Result getJobByCitycount(
+			HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("province") int province,
+			@PathVariable("city") int city) {
+		Result result =new Result();
+		result.code =1;
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET");
+		result.setInfo(""+publishJobService.getJobByCityCout(province, city));
+		
+		return result;
+			 
 	}
 
 	@RequestMapping(value = "/registeruser", method = RequestMethod.POST)
@@ -280,10 +308,8 @@ public class CuserApi {
 
 	private String getIP(HttpServletRequest request) {
 		return "118.207.87.41";
-		//return IpAddress.getRemortIP(request);
+		// return IpAddress.getRemortIP(request);
 	}
-	
-	
 
 	private void updateCookie(HttpServletRequest request,
 			HttpServletResponse response, String key, String value) {

@@ -26,4 +26,9 @@ public interface IPublishJobService {
 
 	public abstract List<JobChance> getDeliverListByxy(MapPoint mapPoint);
 
+	public abstract List<JobChance> getJobByCity(int province, int city);
+	
+	public abstract List<JobChance> getJobByCityByPage(int province, int city,int page,int size);
+	public abstract long getJobByCityCout(int province, int city);
+	public abstract List<JobChance> getJobByCityAndTypeByPage(int province, int city,int jobType, int page,int size);
 }

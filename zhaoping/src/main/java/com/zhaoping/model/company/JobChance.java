@@ -28,7 +28,7 @@ public class JobChance implements Serializable {
 	// 发这个职位的公司
 	private int companyId = -1;
 
-	// 职位类型
+	// 职位类型专职(1), 兼职(2), 小时工(3), 推销员(4);
 	private int jobType;
 
 	private String jobName;
@@ -41,13 +41,13 @@ public class JobChance implements Serializable {
 //	public int highSalary = 0;
 
 	// 工作标签
-	private List<JobLabel> labels = null;
+	private List<Integer> labels = null;
 
-	public List<JobLabel> getLabels() {
+	public List<Integer> getLabels() {
 		return labels;
 	}
 
-	public void setLabels(List<JobLabel> labels) {
+	public void setLabels(List<Integer> labels) {
 		this.labels = labels;
 	}
 
@@ -65,9 +65,9 @@ public class JobChance implements Serializable {
 
 	private String introduction;
 
-	private Province province;
+	private int province;
 
-	private City city;
+	private int city;
 
 	// public Area area;
 
@@ -207,19 +207,19 @@ public class JobChance implements Serializable {
 		this.introduction = introduction;
 	}
 
-	public Province getProvince() {
+	public int getProvince() {
 		return province;
 	}
 
-	public void setProvince(Province province) {
+	public void setProvince(int province) {
 		this.province = province;
 	}
 
-	public City getCity() {
+	public int getCity() {
 		return city;
 	}
 
-	public void setCity(City city) {
+	public void setCity(int city) {
 		this.city = city;
 	}
 
