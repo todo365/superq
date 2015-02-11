@@ -36,9 +36,9 @@ public class RUser implements Serializable {
 
 	private String bornDate;
 
-	private Province bornProvince;
+	private int bornProvince;
 
-	private City bornCity;
+	private int bornCity;
 
 	private String ip;
 
@@ -138,19 +138,19 @@ public class RUser implements Serializable {
 		this.sex = sex;
 	}
 
-	public Province getBornProvince() {
+	public int getBornProvince() {
 		return bornProvince;
 	}
 
-	public void setBornProvince(Province bornProvince) {
+	public void setBornProvince(int bornProvince) {
 		this.bornProvince = bornProvince;
 	}
 
-	public City getBornCity() {
+	public int getBornCity() {
 		return bornCity;
 	}
 
-	public void setBornCity(City bornCity) {
+	public void setBornCity(int bornCity) {
 		this.bornCity = bornCity;
 	}
 

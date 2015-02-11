@@ -13,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.executor.ReuseExecutor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -123,20 +124,20 @@ public class CuserApi {
 		return publishJobService.getJobByCityAndTypeByPage(province, city,
 				jobtype, page, size);
 	}
-	
+
 	@RequestMapping(value = "/getjobbycitycount/{province}/{city}", method = RequestMethod.GET)
-	public @ResponseBody Result getJobByCitycount(
-			HttpServletRequest request, HttpServletResponse response,
+	public @ResponseBody Result getJobByCitycount(HttpServletRequest request,
+			HttpServletResponse response,
 			@PathVariable("province") int province,
 			@PathVariable("city") int city) {
-		Result result =new Result();
-		result.code =1;
+		Result result = new Result();
+		result.code = 1;
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET");
-		result.setInfo(""+publishJobService.getJobByCityCout(province, city));
-		
+		result.setInfo("" + publishJobService.getJobByCityCout(province, city));
+
 		return result;
-			 
+
 	}
 
 	@RequestMapping(value = "/registeruser", method = RequestMethod.POST)
@@ -148,7 +149,7 @@ public class CuserApi {
 			result.code = -2;
 			result.info = "这个手机号已经存在";
 		} else {
-			resume.setBornProvinceId(resume.getBornProvince().getId());
+			resume.setBornProvinceId(resume.getBornProvince());
 			LocationAddress address = Location.getLocation(getIP(request));
 			MapPoint mapPoint = new MapPoint();
 			String x = address.getContent().getPoint().x;
@@ -289,6 +290,26 @@ public class CuserApi {
 		return lists;
 	}
 
+	@RequestMapping(value = "/getresumecountbycity/{province}/{city}", method = RequestMethod.GET)
+	public Result getResumeListByCityCount(HttpServletRequest request,
+			HttpServletResponse response,
+			@PathVariable("province") int province,
+			@PathVariable("city") int city) {
+		Result result = new Result();
+		result.code = 1;
+		result.setInfo(""
+				+ cuserService.getResumeListByCityCount(province, city));
+		return result;
+	}
+
+	@RequestMapping(value = "/getresumebycity/{province}/{city}", method = RequestMethod.GET)
+	public List<Resume> getResumeListByCityPage(int province, int city,
+			int pagenum, int size) {
+		List<Resume> list = cuserService.getResumeListByCityPage(province,
+				city, pagenum, size);
+		return list;
+	}
+
 	@RequestMapping(value = "/getfriend/{userid}", method = RequestMethod.GET)
 	public @ResponseBody List<Resume> getfriendListByxy(
 			HttpServletRequest request, HttpServletResponse response,
@@ -301,8 +322,8 @@ public class CuserApi {
 		// mapPoint.setMapX(116.0);
 		// mapPoint.setMapY(39.0);
 
-		List<Resume> lists = cuserService.getResumeListByProvince(resume
-				.getBornProvince().getId(), mapPoint);
+		List<Resume> lists = cuserService.getResumeListByProvince(
+				resume.getProvince(), mapPoint);
 		return lists;
 	}
 

@@ -37,8 +37,8 @@ public class CuserService implements ICuserService {
 	public RUser getSimpleRegisterUserById(int userid) {
 		List<RUser> list1 = null;
 		RUser rUser = new RUser();
-		rUser.setBornCity(new City());
-		rUser.setBornProvince(new Province());
+		rUser.setBornCity(1);
+		rUser.setBornProvince(1);
 		// rUser.setMapPoint(new MapPoint());
 		// rUser.setMapPoint(x, y);
 		mongoQuey = mongoQuey.SelectCollection(usertablename);
@@ -174,7 +174,7 @@ public class CuserService implements ICuserService {
 
 		List<Resume> list = null;
 		Resume resume = new Resume();
-		resume.setBornCity(new City());
+		resume.setBornCity(1);
 
 		// resume.setMapPoint(new MapPoint());
 		resume.setEducation(1);
@@ -221,6 +221,26 @@ public class CuserService implements ICuserService {
 	}
 
 	@Override
+	public List<Resume> getResumeListByCity(int province, int city) {
+		List<Resume> list = mongoQuey.where("province", province)
+				.where("jobCity", city).select(Resume.class);
+		return list;
+	}
+
+	@Override
+	public long getResumeListByCityCount(int province, int city) {
+		return mongoQuey.where("province", province).where("jobCity", city)
+				.Count();
+	}
+	
+	@Override
+	public List<Resume> getResumeListByCityPage(int province, int city,int pagenum,int size) {
+		List<Resume> list = mongoQuey.where("province", province)
+				.where("jobCity", city).page(pagenum, size).select(Resume.class);
+		return list;
+	}
+
+	@Override
 	public List<Resume> getResumeListByxy(MapPoint mapPoint) {
 		mongoQuey = mongoQuey.SelectCollection(usertablename);
 
@@ -251,7 +271,8 @@ public class CuserService implements ICuserService {
 		}
 		Result result = new Result();
 		mongoQuey = mongoQuey.SelectCollection(usertablename);
-		List<Resume> resumes = mongoQuey.where("bornProvinceId", province).select(Resume.class);
+		List<Resume> resumes = mongoQuey.where("bornProvinceId", province)
+				.select(Resume.class);
 
 		return resumes;
 	}

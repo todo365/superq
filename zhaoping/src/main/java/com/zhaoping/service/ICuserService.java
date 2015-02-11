@@ -31,13 +31,21 @@ public interface ICuserService {
 	public abstract Resume getUserResumeByTel(String tel);
 
 	public abstract Resume getUserResumeByid(int id);
-	
+
 	public abstract Result updateUserPoint(int id, MapPoint mapPoint);
-	
+
 	public abstract List<Resume> getResumeListByxy(MapPoint mapPoint);
-	
+
 	public abstract Result insertResume(Resume resume);
-	
-	public abstract List<Resume> getResumeListByProvince(int province, MapPoint mapPoint);
+
+	public abstract List<Resume> getResumeListByProvince(int province,
+			MapPoint mapPoint);
+
+	public abstract List<Resume> getResumeListByCity(int province, int city);
+
+	public abstract long getResumeListByCityCount(int province, int city);
+
+	public abstract List<Resume> getResumeListByCityPage(int province,
+			int city, int pagenum, int size);
 
 }
