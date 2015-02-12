@@ -3,20 +3,30 @@
  */
 package com.zhaoping.api;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.zhaoping.model.City;
 import com.zhaoping.model.Province;
+import com.zhaoping.model.Result;
 import com.zhaoping.model.company.JobLabel;
 
 /**
@@ -27,6 +37,7 @@ import com.zhaoping.model.company.JobLabel;
 @Controller
 @RequestMapping(value = "/api/baseapi")
 public class BaseApi {
+	private static Logger logger = Logger.getLogger(BaseApi.class);
 
 	@RequestMapping(value = "/province/", method = RequestMethod.GET)
 	public @ResponseBody List<Province> getProvince(HttpServletRequest request,
@@ -135,12 +146,62 @@ public class BaseApi {
 		return list;
 	}
 
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public Result upLoadFile(@RequestParam("file") MultipartFile[] files,
+			HttpServletRequest request, HttpServletResponse response) {
+		Result result = new Result();
+		result.code = -1;
+		for (int i = 0; i < files.length; i++) {
+			System.out.println("fileName---------->"
+					+ files[i].getOriginalFilename());
+			if (!files[i].isEmpty()) {
+				String file = request.getSession().getServletContext()
+						.getRealPath("/WEB-INF/upload");
+
+				try {
+					String ds = file + new Date().getTime()
+							+ files[i].getOriginalFilename();
+					FileOutputStream os = new FileOutputStream(ds);
+					try {
+						FileInputStream in = (FileInputStream) files[i]
+								.getInputStream();
+						int b = 0;
+						while ((b = in.read()) != -1) {
+							os.write(b);
+						}
+						os.flush();
+						os.close();
+						in.close();
+						result.code = 1;
+						result.setInfo(ds);
+
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						result.setInfo("上传失败");
+						logger.error(e);
+					}
+
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					result.setInfo("上传失败");
+					logger.error(e);
+				}
+
+			}
+
+		}
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST");
+		return result;
+	}
+
 	@RequestMapping(value = "/jablabels", method = RequestMethod.GET)
-	public @ResponseBody List<JobLabel> getJobLabels(HttpServletRequest request,
-			HttpServletResponse response) {
+	public @ResponseBody List<JobLabel> getJobLabels(
+			HttpServletRequest request, HttpServletResponse response) {
 		List<JobLabel> jobLabels = new ArrayList<JobLabel>();
 		JobLabel j1 = new JobLabel();
-		//五险 公积金，包吃包住 ，长白班，年底双薪，年终奖金
+		// 五险 公积金，包吃包住 ，长白班，年底双薪，年终奖金
 		j1.setId(1);
 		j1.setJobLabelName("五险");
 		jobLabels.add(j1);
@@ -148,16 +209,16 @@ public class BaseApi {
 		j2.setId(2);
 		j2.setJobLabelName("包吃包住");
 		jobLabels.add(j2);
-		JobLabel j3= new JobLabel();
+		JobLabel j3 = new JobLabel();
 		j3.setId(3);
 		j3.setJobLabelName("年底双薪");
 		jobLabels.add(j3);
-		JobLabel j4= new JobLabel();
+		JobLabel j4 = new JobLabel();
 		j4.setId(4);
 		j4.setJobLabelName("年终奖金");
 		jobLabels.add(j4);
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET");
-		 return jobLabels;
+		return jobLabels;
 	}
 }

@@ -482,6 +482,7 @@ public class CMongoQuey<E extends Serializable> {
 		E object = null;
 		try {
 			String jsString = JsonUtil.toString(dbObject);
+		
 			object = JsonUtil.toObject(jsString, classz);
 
 		} catch (Exception e1) {

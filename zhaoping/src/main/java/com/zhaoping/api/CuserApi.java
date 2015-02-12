@@ -121,8 +121,9 @@ public class CuserApi {
 			@PathVariable("page") int page, @PathVariable("size") int size) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET");
-		return publishJobService.getJobByCityAndTypeByPage(province, city,
+		List<JobChance> list =  publishJobService.getJobByCityAndTypeByPage(province, city,
 				jobtype, page, size);
+		return list;
 	}
 
 	@RequestMapping(value = "/getjobbycitycount/{province}/{city}", method = RequestMethod.GET)

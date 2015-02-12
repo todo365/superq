@@ -8,5 +8,13 @@
 <input type="button" onclick="javascript:login2()" value="cookietest" id="bbb"/>
 <input type="button" value="Create" id="btnsubmit1" />
 <input type="button" value="insert" id="insert" onclick="javascript:insert()" />
+
+ 
+ <FORM enctype="multipart/form-data"  METHOD="POST" ACTION="/zhaoping/api/baseapi/upload">
+     <input type="file" name="file" /><br>
+   
+     <INPUT TYPE="submit"> 
+ </FORM>
+ 
 </body>
 </html>

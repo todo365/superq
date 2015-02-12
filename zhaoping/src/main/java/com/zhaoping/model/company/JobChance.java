@@ -36,9 +36,9 @@ public class JobChance implements Serializable {
 	// 计薪方式
 	private int level;
 
-//	public int lowSalary = 0;
-//
-//	public int highSalary = 0;
+	private int lowSalary = 0;
+
+	private int highSalary = 0;
 
 	// 工作标签
 	private List<Integer> labels = null;
@@ -133,21 +133,21 @@ public class JobChance implements Serializable {
 		this.level =level;
 	}
 
-//	public int getLowSalary() {
-//		return lowSalary;
-//	}
-//
-//	public void setLowSalary(int lowSalary) {
-//		this.lowSalary = lowSalary;
-//	}
-//
-//	public int getHighSalary() {
-//		return highSalary;
-//	}
-//
-//	public void setHighSalary(int highSalary) {
-//		this.highSalary = highSalary;
-//	}
+	public int getLowSalary() {
+		return lowSalary;
+	}
+
+	public void setLowSalary(int lowSalary) {
+		this.lowSalary = lowSalary;
+	}
+
+	public int getHighSalary() {
+		return highSalary;
+	}
+
+	public void setHighSalary(int highSalary) {
+		this.highSalary = highSalary;
+	}
 
 	
 
