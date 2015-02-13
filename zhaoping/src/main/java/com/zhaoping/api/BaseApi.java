@@ -147,7 +147,7 @@ public class BaseApi {
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public Result upLoadFile(@RequestParam("file") MultipartFile[] files,
+	public @ResponseBody Result upLoadFile(@RequestParam("file") MultipartFile[] files,
 			HttpServletRequest request, HttpServletResponse response) {
 		Result result = new Result();
 		result.code = -1;
@@ -156,7 +156,7 @@ public class BaseApi {
 					+ files[i].getOriginalFilename());
 			if (!files[i].isEmpty()) {
 				String file = request.getSession().getServletContext()
-						.getRealPath("/WEB-INF/upload");
+						.getRealPath("/WEB-INF/upload/");
 
 				try {
 					String ds = file + new Date().getTime()
