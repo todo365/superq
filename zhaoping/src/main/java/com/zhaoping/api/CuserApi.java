@@ -293,11 +293,19 @@ public class CuserApi {
 		return result;
 	}
 
-	@RequestMapping(value = "/getresumebycity/{province}/{city}", method = RequestMethod.GET)
-	public List<Resume> getResumeListByCityPage(int province, int city,
-			int pagenum, int size) {
+	@RequestMapping(value = "/getresumebycity/{province}/{city}/{page}/{size}", method = RequestMethod.GET)
+	public List<Resume> getResumeListByCityPage(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@PathVariable("province") int province,
+			@PathVariable("city") int city,
+			@PathVariable("page") int page,
+			@PathVariable("size") int size
+			) {
 		List<Resume> list = cuserService.getResumeListByCityPage(province,
-				city, pagenum, size);
+				city, page, size);
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET");
 		return list;
 	}
 

@@ -55,12 +55,12 @@ public class BaseApi {
 			@PathVariable("provinceid") int provinceid) {
 		List<City> list = new ArrayList<City>();
 		City city = new City();
-		if (provinceid == 1) {
-			city.setId(1);
+		if (provinceid == 2) {
+			city.setId(2);
 			city.setCityName("北京");
 			list.add(city);
 		}
-		if (provinceid == 2) {
+		if (provinceid == 1) {
 			City city1 = new City();
 			city1.setId(1);
 			city1.setCityName("普陀区");
