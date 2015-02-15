@@ -1,11 +1,12 @@
 /**
- * 
+ *
  */
 package com.zhaoping.api;
 
 import com.zhaoping.bdMapApi.Location;
 import com.zhaoping.model.MapPoint;
 import com.zhaoping.model.Result;
+import com.zhaoping.model.ResultList;
 import com.zhaoping.model.bdapi.LocationAddress;
 import com.zhaoping.model.cmodel.RUser;
 import com.zhaoping.model.cmodel.Resume;
@@ -21,12 +22,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author hongxiao.shou C端用户请求接口
- *
  */
 @Controller
 @Scope("request")
@@ -39,9 +40,11 @@ public class CuserApi {
 	protected IPublishJobService publishJobService;
 
 	@RequestMapping(value = "/login/{phone}/{pwd}", method = RequestMethod.GET)
-	public @ResponseBody Result login(HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("phone") String phone,
-			@PathVariable("pwd") String pwd) {
+	public
+	@ResponseBody
+	Result login(HttpServletRequest request,
+				 HttpServletResponse response, @PathVariable("phone") String phone,
+				 @PathVariable("pwd") String pwd) {
 		RUser cRegister = null;
 		cRegister = cuserService.login(phone, pwd);
 
@@ -81,8 +84,10 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/getsimpleuser/{userid}", method = RequestMethod.GET)
-	public @ResponseBody RUser getsimpleUser(HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("userid") int userid) {
+	public
+	@ResponseBody
+	RUser getsimpleUser(HttpServletRequest request,
+						HttpServletResponse response, @PathVariable("userid") int userid) {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET");
@@ -91,7 +96,9 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/getnearjobchancelistid/{id}", method = RequestMethod.GET)
-	public @ResponseBody List<JobChance> getNearDeliverListById(
+	public
+	@ResponseBody
+	List<JobChance> getNearDeliverListById(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("id") int id) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -102,25 +109,29 @@ public class CuserApi {
 		return publishJobService.getDeliverListByxy(mapPoint);
 	}
 
-	@RequestMapping(value = "/getjobbycityandtypebypage/{province}/{city}/{jobtype}/{page}/{size}", method = RequestMethod.GET)
-	public @ResponseBody List<JobChance> getJobByCityAndTypeByPage(
+	@RequestMapping(value = "/getjobbycityandtypebypage/{province}/{city}/{type}/{page}/{size}", method = RequestMethod.GET)
+	public
+	@ResponseBody
+	List<JobChance> getJobByCityAndTypeByPage(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("province") int province,
 			@PathVariable("city") int city,
-			@PathVariable("jobtype") int jobtype,
+			@PathVariable("type") int type,
 			@PathVariable("page") int page, @PathVariable("size") int size) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET");
-		List<JobChance> list =  publishJobService.getJobByCityAndTypeByPage(province, city,
-				jobtype, page, size);
+		List<JobChance> list = publishJobService.getJobByCityAndTypeByPage(province, city,
+				type, page, size);
 		return list;
 	}
 
 	@RequestMapping(value = "/getjobbycitycount/{province}/{city}", method = RequestMethod.GET)
-	public @ResponseBody Result getJobByCitycount(HttpServletRequest request,
-			HttpServletResponse response,
-			@PathVariable("province") int province,
-			@PathVariable("city") int city) {
+	public
+	@ResponseBody
+	Result getJobByCitycount(HttpServletRequest request,
+							 HttpServletResponse response,
+							 @PathVariable("province") int province,
+							 @PathVariable("city") int city) {
 		Result result = new Result();
 		result.code = 1;
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -131,9 +142,33 @@ public class CuserApi {
 
 	}
 
+	@RequestMapping(value = "/getjobcount/{province}", method = RequestMethod.GET)
+	public
+	@ResponseBody
+	List<ResultList> getJobycount(HttpServletRequest request,
+								  HttpServletResponse response,
+								  @PathVariable("province") int province) {
+		List<ResultList> resultlist = new ArrayList<ResultList>();
+
+		for (int i = 1; i <= 18; i++) {
+			ResultList result = new ResultList();
+			result.setCityid(i);
+			result.setCount(publishJobService.getJobByCityCout(province, i));
+			resultlist.add(result);
+		}
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET");
+
+		return resultlist;
+
+	}
+
 	@RequestMapping(value = "/registeruser", method = RequestMethod.POST)
-	public @ResponseBody Result insertUser(HttpServletRequest request,
-			HttpServletResponse response, @RequestBody Resume resume) {
+	public
+	@ResponseBody
+	Result insertUser(HttpServletRequest request,
+					  HttpServletResponse response, @RequestBody Resume resume) {
 		Result result = null;
 		result = cuserService.checkTel(resume.getPhone());
 		if (result.code == 1) {
@@ -171,15 +206,17 @@ public class CuserApi {
 
 	/**
 	 * 更新注册信息
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param cRegister
 	 * @return
 	 */
 	@RequestMapping(value = "/updateregisteruser", method = RequestMethod.POST)
-	public @ResponseBody Result updateRegisterUser(HttpServletRequest request,
-			HttpServletResponse response, @RequestBody Resume resume) {
+	public
+	@ResponseBody
+	Result updateRegisterUser(HttpServletRequest request,
+							  HttpServletResponse response, @RequestBody Resume resume) {
 		Result result = null;
 		LocationAddress address = Location.getLocation(getIP(request));
 		MapPoint mapPoint = new MapPoint();
@@ -205,15 +242,17 @@ public class CuserApi {
 
 	/**
 	 * 更新简历
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param user
 	 * @return
 	 */
 	@RequestMapping(value = "/updateresume", method = RequestMethod.POST)
-	public @ResponseBody Result updateUser(HttpServletRequest request,
-			HttpServletResponse response, @RequestBody Resume user) {
+	public
+	@ResponseBody
+	Result updateUser(HttpServletRequest request,
+					  HttpServletResponse response, @RequestBody Resume user) {
 		Result result = null;
 
 		result = cuserService.updateUserResume(user);
@@ -225,15 +264,17 @@ public class CuserApi {
 
 	/**
 	 * 根据用户电话可以取得用户的简历信息，后期需要注意xss
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param tel
 	 * @return
 	 */
 	@RequestMapping(value = "/getresume/{tel}", method = RequestMethod.GET)
-	public @ResponseBody Resume getresume(HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("tel") String tel) {
+	public
+	@ResponseBody
+	Resume getresume(HttpServletRequest request,
+					 HttpServletResponse response, @PathVariable("tel") String tel) {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET");
@@ -241,8 +282,10 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/getresumebyid/{id}", method = RequestMethod.GET)
-	public @ResponseBody Resume getresumebyid(HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("id") int id) {
+	public
+	@ResponseBody
+	Resume getresumebyid(HttpServletRequest request,
+						 HttpServletResponse response, @PathVariable("id") int id) {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET");
@@ -251,9 +294,11 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/updatemapbyid/{id}/{mapx}/{mapy}", method = RequestMethod.GET)
-	public @ResponseBody Result updatemapbyid(HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("id") int id,
-			@PathVariable("mapx") String mapx, @PathVariable("mapy") String mapy) {
+	public
+	@ResponseBody
+	Result updatemapbyid(HttpServletRequest request,
+						 HttpServletResponse response, @PathVariable("id") int id,
+						 @PathVariable("mapx") String mapx, @PathVariable("mapy") String mapy) {
 		Result result = null;
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET");
@@ -266,7 +311,9 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/getnearusers/{userid}", method = RequestMethod.GET)
-	public @ResponseBody List<Resume> getResumeListByxy(
+	public
+	@ResponseBody
+	List<Resume> getResumeListByxy(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("userid") int id) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -283,9 +330,9 @@ public class CuserApi {
 
 	@RequestMapping(value = "/getresumecountbycity/{province}/{city}", method = RequestMethod.GET)
 	public Result getResumeListByCityCount(HttpServletRequest request,
-			HttpServletResponse response,
-			@PathVariable("province") int province,
-			@PathVariable("city") int city) {
+										   HttpServletResponse response,
+										   @PathVariable("province") int province,
+										   @PathVariable("city") int city) {
 		Result result = new Result();
 		result.code = 1;
 		result.setInfo(""
@@ -301,7 +348,7 @@ public class CuserApi {
 			@PathVariable("city") int city,
 			@PathVariable("page") int page,
 			@PathVariable("size") int size
-			) {
+	) {
 		List<Resume> list = cuserService.getResumeListByCityPage(province,
 				city, page, size);
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -310,7 +357,9 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/getfriend/{userid}", method = RequestMethod.GET)
-	public @ResponseBody List<Resume> getfriendListByxy(
+	public
+	@ResponseBody
+	List<Resume> getfriendListByxy(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("userid") int id) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -332,7 +381,7 @@ public class CuserApi {
 	}
 
 	private void updateCookie(HttpServletRequest request,
-			HttpServletResponse response, String key, String value) {
+							  HttpServletResponse response, String key, String value) {
 		// Cookie cookies[] = request.getCookies();
 		Cookie c = null;
 		c = new Cookie(key, value);
