@@ -32,7 +32,7 @@ import com.zhaoping.framework.serialization.JsonUtil;
 public class CMongoQuey<E extends Serializable> {
 	private static Logger logger = Logger.getLogger(CMongoQuey.class);
 	DB db = null;
-	private static final ThreadLocal threadSession = new ThreadLocal();
+	private static  ThreadLocal threadSession = new ThreadLocal();
 
 	public static MongoSession getMongoSession() {
 		MongoSession mongoSession = (MongoSession) threadSession.get();
@@ -419,8 +419,8 @@ public class CMongoQuey<E extends Serializable> {
 	/**
 	 * 并条件查询
 	 * 
-	 * @param key
-	 *            指定的key
+	 * @param condtion
+	 *            指定的条件
 	 * @param obj
 	 *            指定的内容
 	 * @return
