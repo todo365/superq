@@ -4,6 +4,7 @@
 package com.zhaoping.api;
 
 import com.zhaoping.bdMapApi.Location;
+import com.zhaoping.framework.net.IpAddress;
 import com.zhaoping.model.MapPoint;
 import com.zhaoping.model.Result;
 import com.zhaoping.model.ResultList;
@@ -209,7 +210,7 @@ public class CuserApi {
 	 *
 	 * @param request
 	 * @param response
-	 * @param cRegister
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(value = "/updateregisteruser", method = RequestMethod.POST)
@@ -356,6 +357,23 @@ public class CuserApi {
 		return list;
 	}
 
+	@RequestMapping(value = "/getresumebycityandsex/{province}/{city}/{sex}/{page}/{size}", method = RequestMethod.GET)
+	public List<Resume> getResumeListByCityandSexPage(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@PathVariable("province") int province,
+			@PathVariable("city") int city,
+			@PathVariable("sex") int sex,
+			@PathVariable("page") int page,
+			@PathVariable("size") int size
+	) {
+		List<Resume> list = cuserService.getResumeListByCityAndSexPage(province,
+				city, sex, page, size);
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET");
+		return list;
+	}
+
 	@RequestMapping(value = "/getfriend/{userid}", method = RequestMethod.GET)
 	public
 	@ResponseBody
@@ -375,9 +393,13 @@ public class CuserApi {
 		return lists;
 	}
 
+	public CuserApi() {
+		super();
+	}
+
 	private String getIP(HttpServletRequest request) {
-		return "118.207.87.41";
-		// return IpAddress.getRemortIP(request);
+		//return "118.207.87.41";
+		 return IpAddress.getRemortIP(request);
 	}
 
 	private void updateCookie(HttpServletRequest request,

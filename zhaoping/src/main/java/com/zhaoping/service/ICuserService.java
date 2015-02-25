@@ -48,4 +48,5 @@ public interface ICuserService {
 	public abstract List<Resume> getResumeListByCityPage(int province,
 			int city, int pagenum, int size);
 
+	public abstract List<Resume> getResumeListByCityAndSexPage(int province, int city,int sex,int pagenum,int size);
 }

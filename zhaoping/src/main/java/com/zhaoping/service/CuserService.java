@@ -234,9 +234,18 @@ public class CuserService implements ICuserService {
 	}
 	
 	@Override
-	public List<Resume> getResumeListByCityPage(int province, int city,int pagenum,int size) {
+	 public List<Resume> getResumeListByCityPage(int province, int city,int pagenum,int size) {
 		List<Resume> list = mongoQuey.where("province", province)
 				.where("jobCity", city).page(pagenum, size).select(Resume.class);
+		return list;
+	}
+
+	@Override
+	public List<Resume> getResumeListByCityAndSexPage(int province, int city,int sex,int pagenum,int size) {
+		boolean sexboolean = sex==1?true:false;
+
+		List<Resume> list = mongoQuey.where("province", province)
+				.where("jobCity", city).where("sex",sexboolean).page(pagenum, size).select(Resume.class);
 		return list;
 	}
 
