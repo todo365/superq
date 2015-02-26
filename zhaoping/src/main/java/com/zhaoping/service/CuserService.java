@@ -222,6 +222,7 @@ public class CuserService implements ICuserService {
 
 	@Override
 	public List<Resume> getResumeListByCity(int province, int city) {
+		mongoQuey = mongoQuey.SelectCollection(usertablename);
 		List<Resume> list = mongoQuey.where("province", province)
 				.where("jobCity", city).select(Resume.class);
 		return list;
@@ -229,12 +230,14 @@ public class CuserService implements ICuserService {
 
 	@Override
 	public long getResumeListByCityCount(int province, int city) {
+		mongoQuey = mongoQuey.SelectCollection(usertablename);
 		return mongoQuey.where("province", province).where("jobCity", city)
 				.Count();
 	}
 	
 	@Override
 	 public List<Resume> getResumeListByCityPage(int province, int city,int pagenum,int size) {
+		mongoQuey = mongoQuey.SelectCollection(usertablename);
 		List<Resume> list = mongoQuey.where("province", province)
 				.where("jobCity", city).page(pagenum, size).select(Resume.class);
 		return list;
@@ -242,8 +245,9 @@ public class CuserService implements ICuserService {
 
 	@Override
 	public List<Resume> getResumeListByCityAndSexPage(int province, int city,int sex,int pagenum,int size) {
-		boolean sexboolean = sex==1?true:false;
 
+		boolean sexboolean = sex==1?true:false;
+		mongoQuey = mongoQuey.SelectCollection(usertablename);
 		List<Resume> list = mongoQuey.where("province", province)
 				.where("jobCity", city).where("sex",sexboolean).page(pagenum, size).select(Resume.class);
 		return list;
