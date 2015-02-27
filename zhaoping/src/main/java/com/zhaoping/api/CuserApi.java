@@ -397,7 +397,7 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/getresumebycity/{province}/{city}/{page}/{size}", method = RequestMethod.GET)
-	public List<Resume> getResumeListByCityPage(
+	public @ResponseBody  List<Resume> getResumeListByCityPage(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("province") int province,
@@ -413,7 +413,7 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/getresumebycityandsex/{province}/{city}/{sex}/{page}/{size}", method = RequestMethod.GET)
-	public List<Resume> getResumeListByCityandSexPage(
+	public @ResponseBody List<Resume> getResumeListByCityandSexPage(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("province") int province,

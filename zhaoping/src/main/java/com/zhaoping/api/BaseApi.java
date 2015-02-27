@@ -156,7 +156,7 @@ public class BaseApi {
 							+ files[i].getOriginalFilename();
 					String fil1="\\"+bufile;
 					String ds = file + fil1;
-					FileOutputStream os = new FileOutputStream(ds);
+					FileOutputStream os = new FileOutputStream(ds.toLowerCase());
 					try {
 						FileInputStream in = (FileInputStream) files[i]
 								.getInputStream();
@@ -168,7 +168,7 @@ public class BaseApi {
 						os.close();
 						in.close();
 						result.code = 1;
-						result.setInfo("/upload"+"/"+bufile);
+						result.setInfo("/upload"+"/"+bufile.toLowerCase());
 
 					} catch (IOException e) {
 						// TODO Auto-generated catch block

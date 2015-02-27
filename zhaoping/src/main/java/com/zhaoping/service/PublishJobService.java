@@ -158,7 +158,7 @@ public class PublishJobService implements IPublishJobService {
 		mongoQuey = mongoQuey.SelectCollection(jobstablename);
 
 		List<JobChance> list = mongoQuey.where("province", province)
-				.where("city", city).where("jobName", Condition.REGEX, "/"+key+"/").page(page, size).select(JobChance.class);
+				.where("city", city).where("jobName", Condition.REGEX, "/"+key+".*/i").page(page, size).select(JobChance.class);
 		return list;
 	}
 
@@ -167,7 +167,7 @@ public class PublishJobService implements IPublishJobService {
 		mongoQuey = mongoQuey.SelectCollection(jobstablename);
 
 		long count = mongoQuey.where("province", province)
-				.where("city", city).where("jobName", Condition.REGEX, "/"+key+"/").Count();
+				.where("city", city).where("jobName", Condition.REGEX, "/"+key+".*/i").Count();
 		return count;
 	}
 
