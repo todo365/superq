@@ -156,18 +156,18 @@ public class PublishJobService implements IPublishJobService {
 	public List<JobChance> getJobByCityAndTypeandKeyByPage(int province, int city, String key, int page,
 														   int size) {
 		mongoQuey = mongoQuey.SelectCollection(jobstablename);
-		String[] params = new String[]{key};
+
 		List<JobChance> list = mongoQuey.where("province", province)
-				.where("city", city).where("jobName", Condition.IN, params).page(page, size).select(JobChance.class);
+				.where("city", city).where("jobName", Condition.REGEX, "/"+key+"/").page(page, size).select(JobChance.class);
 		return list;
 	}
 
 	@Override
 	public long getJobByCityAndTypeandKeyByPageCount(int province, int city, String key) {
 		mongoQuey = mongoQuey.SelectCollection(jobstablename);
-		String[] params = new String[]{key};
+
 		long count = mongoQuey.where("province", province)
-				.where("city", city).where("jobName", Condition.IN, params).Count();
+				.where("city", city).where("jobName", Condition.REGEX, "/"+key+"/").Count();
 		return count;
 	}
 

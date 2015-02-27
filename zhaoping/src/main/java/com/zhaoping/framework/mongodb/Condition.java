@@ -20,7 +20,7 @@ package com.zhaoping.framework.mongodb;
 //  $or  
 
 public enum Condition {
-	  GET("$gte"), GT("$gt"),LT("$lt"),LTE("$lte"),IN("$in"),NIN("$nin"),OR("$or"),NEAR("$near"),ELEMMATCH("$elemMatch");
+	  GET("$gte"), GT("$gt"),LT("$lt"),LTE("$lte"),IN("$in"),NIN("$nin"),OR("$or"),NEAR("$near"),ELEMMATCH("$elemMatch"),REGEX("$regex");
 	    
 	    private final String value;
 
