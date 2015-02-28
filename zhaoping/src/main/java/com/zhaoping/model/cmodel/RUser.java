@@ -45,7 +45,17 @@ public class RUser implements Serializable {
 	private MapPoint mapPoint;
 	
 	private int bornProvinceId;
-	
+
+	private  String resumepic;
+
+	public String getResumepic() {
+		return resumepic;
+	}
+
+	public void setResumepic(String resumepic) {
+		this.resumepic = resumepic;
+	}
+
 	public int getBornProvinceId() {
 		return bornProvinceId;
 	}

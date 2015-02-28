@@ -223,7 +223,7 @@ public class CuserApi {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			String time = formatter.format(date);
 			resume.setRegDate(time);
-
+			resume.setResumepic("http://115.29.37.251:8080/zhaoping/upload/head.jpg");
 			result = cuserService.insertResume(resume);
 			if (result.code >= 0) {
 				updateCookie(request, response, "phone", resume.getPhone());
@@ -293,6 +293,24 @@ public class CuserApi {
 
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "POST");
+		return result;
+	}
+
+	@RequestMapping(value = "/updateuserpic/{userid}/{picurl}", method = RequestMethod.GET)
+	public
+	@ResponseBody
+	Result updateUserPic(HttpServletRequest request,
+						 HttpServletResponse response,
+						 @PathVariable("userid") int userid,
+						 @PathVariable("picurl") String picurl) {
+
+		Result result = null;
+		Resume resume= cuserService.getUserResumeByid(userid);
+		resume.setResumepic(picurl);
+		result = cuserService.updateRegisterUse(resume);
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET");
 		return result;
 	}
 
@@ -397,7 +415,9 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/getresumebycity/{province}/{city}/{page}/{size}", method = RequestMethod.GET)
-	public @ResponseBody  List<Resume> getResumeListByCityPage(
+	public
+	@ResponseBody
+	List<Resume> getResumeListByCityPage(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("province") int province,
@@ -413,7 +433,9 @@ public class CuserApi {
 	}
 
 	@RequestMapping(value = "/getresumebycityandsex/{province}/{city}/{sex}/{page}/{size}", method = RequestMethod.GET)
-	public @ResponseBody List<Resume> getResumeListByCityandSexPage(
+	public
+	@ResponseBody
+	List<Resume> getResumeListByCityandSexPage(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("province") int province,

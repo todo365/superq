@@ -282,7 +282,7 @@ public class CMongoQuey<E extends Serializable> {
 			updatedValue.putAll(map);
 			DBObject updateSetValue = new BasicDBObject("$set", updatedValue);
 			WriteResult result = collection.update(query, updateSetValue,
-					false, false); // false//如果数据库不存在，是否添加
+					true, false); // false//如果数据库不存在，是否添加
 			// false//false只修改第一个，true如果有多条就不修改
 			rt = result.getN();
 			query = new BasicDBObject();
