@@ -209,7 +209,7 @@ public class CuserApi {
 			result.code = -2;
 			result.info = "这个手机号已经存在";
 		} else {
-			resume.setBornProvinceId(resume.getBornProvince());
+			resume.setBornProvince(resume.getBornProvince());
 			LocationAddress address = Location.getLocation(getIP(request));
 			MapPoint mapPoint = new MapPoint();
 			String x = address.getContent().getPoint().x;

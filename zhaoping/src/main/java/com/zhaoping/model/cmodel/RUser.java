@@ -46,13 +46,13 @@ public class RUser implements Serializable {
 	
 	private int bornProvinceId;
 	
-	public int getBornProvinceId() {
-		return bornProvinceId;
-	}
-
-	public void setBornProvinceId(int bornProvinceId) {
-		this.bornProvinceId = bornProvinceId;
-	}
+//	public int getBornProvinceId() {
+//		return bornProvinceId;
+//	}
+//
+//	public void setBornProvinceId(int bornProvinceId) {
+//		this.bornProvinceId = bornProvinceId;
+//	}
 
 	public String getIp() {
 		return ip;
