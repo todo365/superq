@@ -46,13 +46,13 @@ public class RUser implements Serializable {
 	
 	private int bornProvinceId;
 	
-	public int getBornProvinceId() {
-		return bornProvinceId;
-	}
-
-	public void setBornProvinceId(int bornProvinceId) {
-		this.bornProvinceId = bornProvinceId;
-	}
+//	public int getBornProvinceId() {
+//		return bornProvinceId;
+//	}
+//
+//	public void setBornProvinceId(int bornProvinceId) {
+//		this.bornProvinceId = bornProvinceId;
+//	}
 
 	public String getIp() {
 		return ip;
@@ -60,6 +60,16 @@ public class RUser implements Serializable {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	private  String resumepic;
+
+	public String getResumepic() {
+		return resumepic;
+	}
+
+	public void setResumepic(String resumepic) {
+		this.resumepic = resumepic;
 	}
 
 	/**
