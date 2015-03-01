@@ -156,19 +156,48 @@ public class PublishJobService implements IPublishJobService {
 	public List<JobChance> getJobByCityAndTypeandKeyByPage(int province, int city, String key, int page,
 														   int size) {
 		mongoQuey = mongoQuey.SelectCollection(jobstablename);
-
-		List<JobChance> list = mongoQuey.where("province", province)
-				.where("city", city).where("jobName", Condition.REGEX, "["+key+"]").page(page, size).select(JobChance.class);
+		List<JobChance> list = null;
+		if (city == 0)
+			list = mongoQuey.where("province", province)
+					.where("jobName", Condition.REGEX, "[" + key + "]").page(page, size).select(JobChance.class);
+		else
+			list = mongoQuey.where("province", province)
+					.where("city", city).where("jobName", Condition.REGEX, "[" + key + "]").page(page, size).select(JobChance.class);
 		return list;
 	}
 
 	@Override
 	public long getJobByCityAndTypeandKeyByPageCount(int province, int city, String key) {
 		mongoQuey = mongoQuey.SelectCollection(jobstablename);
+		long count = 0;
+
+		if (city == 0)
+			count = mongoQuey.where("province", province)
+					.where("jobName", Condition.REGEX, "[" + key + "]").Count();
+		else
+			count = mongoQuey.where("province", province)
+					.where("city", city).where("jobName", Condition.REGEX, "[" + key + "]").Count();
+		return count;
+	}
+
+
+	@Override
+	public long getJobByCityAndKeyCount(int province, String key) {
+		mongoQuey = mongoQuey.SelectCollection(jobstablename);
 
 		long count = mongoQuey.where("province", province)
-				.where("city", city).where("jobName", Condition.REGEX, "["+key+"]").Count();
+				.where("jobName", Condition.REGEX, "[" + key + "]").Count();
 		return count;
+	}
+
+	@Override
+	public List<JobChance> getJobByCityAndKeyByPage(int province, String key, int page,
+													int size) {
+		mongoQuey = mongoQuey.SelectCollection(jobstablename);
+
+		List<JobChance> list = mongoQuey.where("province", province)
+				.where("jobName", Condition.REGEX, "[" + key + "]").page(page, size).select(JobChance.class);
+		return list;
 	}
 
 	@Override

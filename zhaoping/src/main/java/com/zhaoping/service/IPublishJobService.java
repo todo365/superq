@@ -15,26 +15,31 @@ import com.zhaoping.model.company.JobChance;
  */
 public interface IPublishJobService {
 
-    public abstract Result insertPublishJob(JobChance jobChance);
+	public abstract Result insertPublishJob(JobChance jobChance);
 
-    public abstract Result updatePubLishJob(JobChance jobChance);
+	public abstract Result updatePubLishJob(JobChance jobChance);
 
-    public abstract JobChance getdatePubLishById(int jobid);
+	public abstract JobChance getdatePubLishById(int jobid);
 
-    public abstract List<JobChance> getDeliverListBycompanyId(int companyId);
+	public abstract List<JobChance> getDeliverListBycompanyId(int companyId);
 
-    public abstract List<JobChance> getDeliverListByxy(MapPoint mapPoint);
+	public abstract List<JobChance> getDeliverListByxy(MapPoint mapPoint);
 
-    public abstract List<JobChance> getJobByCity(int province, int city);
+	public abstract List<JobChance> getJobByCity(int province, int city);
 
-    public abstract List<JobChance> getJobByCityByPage(int province, int city, int page, int size);
+	public abstract List<JobChance> getJobByCityByPage(int province, int city, int page, int size);
 
-    public abstract long getJobByCityCout(int province, int city);
+	public abstract long getJobByCityCout(int province, int city);
 
-    public abstract List<JobChance> getJobByCityAndTypeByPage(int province, int city, int jobType, int page, int size);
+	public abstract List<JobChance> getJobByCityAndTypeByPage(int province, int city, int jobType, int page, int size);
 
-    public abstract List<JobChance> getJobByCityAndTypeandKeyByPage(int province, int city, String key, int page,
-                                                                    int size);
+	public abstract List<JobChance> getJobByCityAndTypeandKeyByPage(int province, int city, String key, int page,
+																	int size);
 
-    public abstract long getJobByCityAndTypeandKeyByPageCount(int province, int city, String key);
+	public abstract long getJobByCityAndTypeandKeyByPageCount(int province, int city, String key);
+
+	public abstract long getJobByCityAndKeyCount(int province, String key);
+
+	public abstract List<JobChance> getJobByCityAndKeyByPage(int province, String key, int page,
+															 int size);
 }

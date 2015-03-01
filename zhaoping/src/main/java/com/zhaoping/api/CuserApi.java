@@ -159,6 +159,37 @@ public class CuserApi {
 
 	}
 
+	@RequestMapping(value = "/getjobbycityandkeycount/{province}/{key}", method = RequestMethod.GET)
+	public
+	@ResponseBody
+	Result getJobByCityAndKeyCount(HttpServletRequest request, HttpServletResponse response,
+								   @PathVariable("province") int province,
+								   @PathVariable("key") String key) {
+		Result result = new Result();
+		result.code = 1;
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET");
+		result.setInfo("" + publishJobService.getJobByCityAndKeyCount(province, key));
+		return result;
+	}
+
+
+	@RequestMapping(value = "/getjobbycityandkeybypage/{province}/{key}/{page}/{size}", method = RequestMethod.GET)
+	public
+	@ResponseBody
+	List<JobChance> getJobByCityAndKeyByPage(HttpServletRequest request, HttpServletResponse response,
+											 @PathVariable("province") int province,
+											 @PathVariable("key") String key,
+											 @PathVariable("page") int page, @PathVariable("size") int size) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET");
+
+		List<JobChance> list = publishJobService.getJobByCityAndKeyByPage(province,
+				key, page, size);
+		return list;
+	}
+
+
 	@RequestMapping(value = "/getjobbycitycount/{province}/{city}", method = RequestMethod.GET)
 	public
 	@ResponseBody
@@ -305,7 +336,7 @@ public class CuserApi {
 						 @PathVariable("picurl") String picurl) {
 
 		Result result = null;
-		Resume resume= cuserService.getUserResumeByid(userid);
+		Resume resume = cuserService.getUserResumeByid(userid);
 		resume.setResumepic(picurl);
 		result = cuserService.updateRegisterUse(resume);
 
