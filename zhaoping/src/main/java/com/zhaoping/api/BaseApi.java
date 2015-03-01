@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.zhaoping.api;
 
@@ -14,17 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author hongxiao.shou
- *
  */
 
 @Controller
@@ -33,8 +29,10 @@ public class BaseApi {
 	private static Logger logger = Logger.getLogger(BaseApi.class);
 
 	@RequestMapping(value = "/province/", method = RequestMethod.GET)
-	public @ResponseBody List<Province> getProvince(HttpServletRequest request,
-			HttpServletResponse response) {
+	public
+	@ResponseBody
+	List<Province> getProvince(HttpServletRequest request,
+							   HttpServletResponse response) {
 		List<Province> list = new ArrayList<Province>();
 		Province province = new Province();
 		province.setId(1);
@@ -50,7 +48,9 @@ public class BaseApi {
 	}
 
 	@RequestMapping(value = "/province/{provinceid}", method = RequestMethod.GET)
-	public @ResponseBody List<City> getCityByProvinceiD(
+	public
+	@ResponseBody
+	List<City> getCityByProvinceiD(
 			HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("provinceid") int provinceid) {
 		List<City> list = new ArrayList<City>();
@@ -140,8 +140,10 @@ public class BaseApi {
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody Result upLoadFile(@RequestParam("file") MultipartFile[] files,
-			HttpServletRequest request, HttpServletResponse response) {
+	public
+	@ResponseBody
+	Result upLoadFile(@RequestParam("file") MultipartFile[] files,
+					  HttpServletRequest request, HttpServletResponse response) {
 		Result result = new Result();
 		result.code = -1;
 		for (int i = 0; i < files.length; i++) {
@@ -152,14 +154,15 @@ public class BaseApi {
 						.getRealPath("/upload/");
 				String url = request.getRequestURL().toString();
 				try {
-					String bufile =new Date().getTime()
-							+ files[i].getOriginalFilename();
-					String fil1="\\"+bufile;
+					String bufile = new Date().getTime()
+							+ ".jpg";
+					String fil1 = "\\" + bufile;
 					String ds = file + fil1;
-					FileOutputStream os = new FileOutputStream(ds.toLowerCase());
+					FileOutputStream os = new FileOutputStream(ds);
 					try {
-						FileInputStream in = (FileInputStream) files[i]
-								.getInputStream();
+						//FileInputStream in = (FileInputStream) files[i].getInputStream();
+						//FileInputStream in = new FileInputStream(files[i]);
+						InputStream in = files[0].getInputStream();
 						int b = 0;
 						while ((b = in.read()) != -1) {
 							os.write(b);
@@ -168,7 +171,7 @@ public class BaseApi {
 						os.close();
 						in.close();
 						result.code = 1;
-						result.setInfo("/upload"+"/"+bufile.toLowerCase());
+						result.setInfo("/upload" + "/" + bufile);
 
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -192,7 +195,9 @@ public class BaseApi {
 	}
 
 	@RequestMapping(value = "/jablabels", method = RequestMethod.GET)
-	public @ResponseBody List<JobLabel> getJobLabels(
+	public
+	@ResponseBody
+	List<JobLabel> getJobLabels(
 			HttpServletRequest request, HttpServletResponse response) {
 		List<JobLabel> jobLabels = new ArrayList<JobLabel>();
 		JobLabel j1 = new JobLabel();

@@ -23,8 +23,8 @@ public class Firm implements Serializable {
 	public String name;
 	public String contactMan;
 	public String contactTel;
-	public Province province;
-	public City city;
+	public int province;
+	public int city;
 	public String address;
 	public String introduction;
 	public String license;
@@ -102,19 +102,19 @@ public class Firm implements Serializable {
 		this.contactTel = contactTel;
 	}
 
-	public Province getProvince() {
+	public int getProvince() {
 		return province;
 	}
 
-	public void setProvince(Province province) {
+	public void setProvince(int province) {
 		this.province = province;
 	}
 
-	public City getCity() {
+	public int getCity() {
 		return city;
 	}
 
-	public void setCity(City city) {
+	public void setCity(int city) {
 		this.city = city;
 	}
 

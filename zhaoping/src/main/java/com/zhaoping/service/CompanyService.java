@@ -109,8 +109,8 @@ public class CompanyService implements ICompanyService {
 	public Firm getupdateCompanyById(int firmid) {
 		List<Firm> list1 = null;
 		Firm firm = new Firm();
-		firm.setCity(new City());
-		firm.setProvince(new Province());
+		firm.setCity(2);
+		firm.setProvince(1);
 
 		mongoQuey = mongoQuey.SelectCollection(companytablename);
 		list1 = mongoQuey.where("id", firmid).select(Firm.class);
