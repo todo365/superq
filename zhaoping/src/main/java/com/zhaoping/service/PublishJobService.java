@@ -5,6 +5,7 @@ package com.zhaoping.service;
 
 import com.zhaoping.framework.mongodb.CMongoQuey;
 import com.zhaoping.framework.mongodb.Condition;
+import com.zhaoping.framework.mongodb.SortByDirection;
 import com.zhaoping.model.MapPoint;
 import com.zhaoping.model.Result;
 import com.zhaoping.model.company.JobChance;
@@ -148,7 +149,7 @@ public class PublishJobService implements IPublishJobService {
 		mongoQuey = mongoQuey.SelectCollection(jobstablename);
 
 		List<JobChance> list = mongoQuey.where("province", province)
-				.where("city", city).where("jobType", jobType).page(page, size).select(JobChance.class);
+				.where("city", city).where("jobType", jobType).sortby("id", SortByDirection.Des).page(page, size).select(JobChance.class);
 		return list;
 	}
 
@@ -162,7 +163,7 @@ public class PublishJobService implements IPublishJobService {
 					.where("jobName", Condition.REGEX, "[" + key + "]").page(page, size).select(JobChance.class);
 		else
 			list = mongoQuey.where("province", province)
-					.where("city", city).where("jobName", Condition.REGEX, "[" + key + "]").page(page, size).select(JobChance.class);
+					.where("city", city).where("jobName", Condition.REGEX, "[" + key + "]").sortby("id", SortByDirection.Des).page(page, size).select(JobChance.class);
 		return list;
 	}
 
