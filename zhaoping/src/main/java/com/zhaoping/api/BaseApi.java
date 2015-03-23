@@ -55,7 +55,7 @@ public class BaseApi {
 			@PathVariable("provinceid") int provinceid) {
 		List<City> list = new ArrayList<City>();
 		City city = new City();
-		if (provinceid == 2) {
+		if (provinceid == 4) {
 			city.setId(2);
 			city.setCityName("北京");
 			list.add(city);
@@ -134,6 +134,79 @@ public class BaseApi {
 			list.add(city17);
 			list.add(city18);
 		}
+		else if(provinceid == 2)
+		{
+			City city1 = new City();
+			city1.setId(1);
+			city1.setProvinceId(2);
+			city1.setCityName("海曙区");
+			City city2 = new City();
+			city2.setId(2);
+			city2.setProvinceId(2);
+			city2.setCityName("江东区");
+			City city3 = new City();
+			city3.setId(3);
+			city3.setProvinceId(2);
+			city3.setCityName("江北区");
+			City city4 = new City();
+			city4.setId(4);
+			city4.setProvinceId(2);
+			city4.setCityName("鄞州区");
+			City city5 = new City();
+			city5.setProvinceId(2);
+			city5.setId(5);
+			city5.setCityName("镇海区");
+			City city6 = new City();
+			city6.setId(6);
+			city6.setProvinceId(2);
+			city6.setCityName("北仑区");
+			list.add(city1);
+			list.add(city2);
+			list.add(city3);
+			list.add(city4);
+			list.add(city5);
+			list.add(city6);
+
+		}
+		else if(provinceid == 3)
+		{
+			City city1 = new City();
+			city1.setId(1);
+			city1.setCityName("崇安区");
+			city1.setProvinceId(3);
+			City city2 = new City();
+			city2.setId(2);
+			city2.setCityName("南长区");
+			city2.setProvinceId(3);
+			City city3 = new City();
+			city3.setId(3);
+			city3.setProvinceId(3);
+			city3.setCityName("北塘区");
+			City city4 = new City();
+			city4.setId(4);
+			city4.setProvinceId(3);
+			city4.setCityName("滨湖区");
+			City city5 = new City();
+			city5.setId(5);
+			city5.setProvinceId(3);
+			city5.setCityName("锡山区");
+			City city6 = new City();
+			city6.setId(6);
+			city6.setProvinceId(3);
+			city6.setCityName("惠山区");
+			City city7 = new City();
+			city7.setId(7);
+			city7.setProvinceId(3);
+			city7.setCityName("高新区");
+			list.add(city1);
+			list.add(city2);
+			list.add(city3);
+			list.add(city4);
+			list.add(city5);
+			list.add(city6);
+			list.add(city7);
+		}
+
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET");
 		return list;
